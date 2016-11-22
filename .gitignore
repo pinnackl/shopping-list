@@ -1,5 +1,6 @@
-.gradle/
+ .gradle/
 .idea/
+app/build.gradle
 build.gradle
 build/
 gradle.properties
@@ -9,3 +10,5 @@ gradlew.bat
 local.properties
 settings.gradle
 shopping-list.iml
+.gradle/
+
