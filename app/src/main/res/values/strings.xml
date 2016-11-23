@@ -18,4 +18,5 @@
     <string name="prompt_password_register">Password</string>
     <string name="prompt_firstname">Firstname</string>
     <string name="prompt_lastname">Lastname</string>
+    <string name="action_register">register</string>
 </resources>
