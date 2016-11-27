@@ -3,6 +3,7 @@ package com.pinnackl.shoppinglist;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -45,22 +46,56 @@ public class RegisterActivity extends AppCompatActivity {
         String firstname = mFirstnameView.getText().toString();
         String lastname = mLastnameView.getText().toString();
 
-        Context context = getApplicationContext();
+        boolean cancel = false;
+        View focusView = null;
 
-        HttpRequest request = new HttpRequest(context);
-        request.execute("email="+email, "&password="+password, "&firstname="+firstname, "&lastname="+lastname);
-    }
+        // Check for a valid email address.
+        if (TextUtils.isEmpty(email)) {
+            mEmailView.setError(getString(R.string.error_field_required));
+            focusView = mEmailView;
+            cancel = true;
+        } else if (!isEmailValid(email)) {
+            mEmailView.setError(getString(R.string.error_invalid_email));
+            focusView = mEmailView;
+            cancel = true;
+        }
 
-    public void displayMessage(JSONObject jsonObj) {
-        try {
-            //String responseCode = jsonObj.getString("code");
-            CharSequence text = jsonObj.getString("msg");
-            int duration = Toast.LENGTH_SHORT;
+        // Check for a valid password.
+        if (TextUtils.isEmpty(password)) {
+            mPasswordView.setError(getString(R.string.error_field_required));
+            focusView = mPasswordView;
+            cancel = true;
+        } else if (!isPasswordValid(password)) {
+            mPasswordView.setError(getString(R.string.error_invalid_password));
+            focusView = mPasswordView;
+            cancel = true;
+        }
 
-            Toast toast = Toast.makeText(RegisterActivity.this, text, duration);
-            toast.show();
-        } catch (JSONException e) {
-            e.printStackTrace();
+        //Check for a valid firstname
+        if (TextUtils.isEmpty(firstname)) {
+            mFirstnameView.setError(getString(R.string.error_field_required));
+            focusView = mFirstnameView;
+            cancel = true;
+        }
+
+        if (cancel) {
+            // There was an error; don't attempt login and focus the first
+            // form field with an error.
+            focusView.requestFocus();
+        } else {
+            Context context = getApplicationContext();
+
+            HttpRequest request = new HttpRequest(context);
+            request.execute("email="+email, "&password="+password, "&firstname="+firstname, "&lastname="+lastname);
         }
     }
+
+    private boolean isEmailValid(String email) {
+        return email.contains("@");
+    }
+
+    private boolean isPasswordValid(String password) {
+        return password.length() > 4;
+    }
+
 }

@@ -52,7 +52,7 @@ public class HttpRequest extends AsyncTask<String, String, String> {
         finally {
             urlConnection.disconnect();
         }
-        
+
         return result.toString();
     }
 
