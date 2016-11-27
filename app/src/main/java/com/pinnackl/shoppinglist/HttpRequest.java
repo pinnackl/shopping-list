@@ -17,9 +17,15 @@ public class HttpRequest extends AsyncTask<String, String, String> {
     protected String doInBackground(String... args) {
 
         StringBuilder result = new StringBuilder();
-        Log.d("Plop", "Args: " + args);
+        int count = args.length;
+        String parameters = "?";
+        for (int i = 0; i < count; i++) {
+            parameters += args[i];
+        }
+        Log.d("Plop", "nb args: " + count);
+        Log.d("Plop", "parameters : " + parameters);
         try {
-            URL url = new URL("http://appspaces.fr/esgi/shopping_list/account/subscribe.php");
+            URL url = new URL("http://appspaces.fr/esgi/shopping_list/account/subscribe.php"+parameters);
             urlConnection = (HttpURLConnection) url.openConnection();
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
 
@@ -45,6 +51,6 @@ public class HttpRequest extends AsyncTask<String, String, String> {
     protected void onPostExecute(String result) {
 
         //Do something with the JSON string
-
+        Log.d("Plop", "response: " + result);
     }
 }

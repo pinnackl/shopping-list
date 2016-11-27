@@ -63,9 +63,8 @@ public class RegisterActivity extends AppCompatActivity {
         StrictMode.setThreadPolicy(policy);
 
         HttpRequest request = new HttpRequest();
-        String response = request.doInBackground("?test=plop");
-        Log.d("Plop", "response: " + response);
-        
+        request.execute("email="+email, "&password="+password, "&firstname="+firstname, "&lastname="+lastname);
+
 
     }
 }
