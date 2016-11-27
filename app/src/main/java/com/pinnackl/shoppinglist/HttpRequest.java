@@ -64,10 +64,10 @@ public class HttpRequest extends AsyncTask<String, String, String> {
             JSONObject jsonObj = new JSONObject(result.toString());
 
             CharSequence text;
-            if(jsonObj.getString("code") != "0") {
-                text = jsonObj.getString("msg");
-            } else {
+            if(jsonObj.getString("code").equals("0")) {
                 text = "Successful registration";
+            } else {
+                text = jsonObj.getString("msg");
             }
             int duration = Toast.LENGTH_SHORT;
 
