@@ -59,23 +59,13 @@ public class RegisterActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
 
-        //http://appspaces.fr/esgi/shopping_list/account/subscribe.php
-        Log.d("Plop", "send");
-
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        try {
-            URL url = new URL("http://appspaces.fr/esgi/shopping_list/account/subscribe.php");
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setDoInput(true);
-            urlConnection.connect();
-            int response = urlConnection.getResponseCode();
-            Log.d("Plop", "The response is: " + response);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        HttpRequest request = new HttpRequest();
+        String response = request.doInBackground("?test=plop");
+        Log.d("Plop", "response: " + response);
+        
+
     }
 }
