@@ -1,7 +1,12 @@
 package com.pinnackl.shoppinglist;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -12,6 +17,11 @@ import java.net.URL;
 
 public class HttpRequest extends AsyncTask<String, String, String> {
     HttpURLConnection urlConnection;
+    private static Context context;
+
+    public HttpRequest(Context c) {
+        this.context = c;
+    }
 
     @Override
     protected String doInBackground(String... args) {
@@ -42,15 +52,29 @@ public class HttpRequest extends AsyncTask<String, String, String> {
         finally {
             urlConnection.disconnect();
         }
-
-
+        
         return result.toString();
     }
 
     @Override
     protected void onPostExecute(String result) {
-
         //Do something with the JSON string
         Log.d("Plop", "response: " + result);
+        try {
+            JSONObject jsonObj = new JSONObject(result.toString());
+
+            CharSequence text;
+            if(jsonObj.getString("code") != "0") {
+                text = jsonObj.getString("msg");
+            } else {
+                text = "Successful registration";
+            }
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(this.context, text, duration);
+            toast.show();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

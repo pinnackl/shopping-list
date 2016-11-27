@@ -1,23 +1,16 @@
 package com.pinnackl.shoppinglist;
 
 import android.content.Context;
-import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class RegisterActivity extends AppCompatActivity {
@@ -53,18 +46,21 @@ public class RegisterActivity extends AppCompatActivity {
         String lastname = mLastnameView.getText().toString();
 
         Context context = getApplicationContext();
-        CharSequence text = email;
-        int duration = Toast.LENGTH_SHORT;
 
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
-
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-
-        HttpRequest request = new HttpRequest();
+        HttpRequest request = new HttpRequest(context);
         request.execute("email="+email, "&password="+password, "&firstname="+firstname, "&lastname="+lastname);
+    }
 
+    public void displayMessage(JSONObject jsonObj) {
+        try {
+            //String responseCode = jsonObj.getString("code");
+            CharSequence text = jsonObj.getString("msg");
+            int duration = Toast.LENGTH_SHORT;
 
+            Toast toast = Toast.makeText(RegisterActivity.this, text, duration);
+            toast.show();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }
