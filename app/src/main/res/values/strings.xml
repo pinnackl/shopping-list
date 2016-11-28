@@ -14,9 +14,16 @@
         completions."
     </string>
 
-    <!-- Strings related to login -->
+    <!-- Strings related to register -->
     <string name="prompt_password_register">Password</string>
     <string name="prompt_firstname">Firstname</string>
     <string name="prompt_lastname">Lastname</string>
     <string name="action_register">Register</string>
+    <string name="action_account">Already have an account ? Sign in</string>
+    <string name="title_activity_product">ProductActivity</string>
+
+    <!-- Strings related to shopping list -->
+    <string name="action_add_list">Add a shopping list</string>
+    <string name="prompt_no_lists">There isn\'t any shopping list yet.</string>
+    <string name="action_create_list">Create list</string>
 </resources>

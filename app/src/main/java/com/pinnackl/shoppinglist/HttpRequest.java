@@ -18,6 +18,7 @@ import java.net.URL;
 public class HttpRequest extends AsyncTask<String, String, String> {
     HttpURLConnection urlConnection;
     private static Context context;
+    private IHttpRequestListener listener;
 
     public HttpRequest(Context c) {
         this.context = c;
@@ -65,8 +66,14 @@ public class HttpRequest extends AsyncTask<String, String, String> {
 
             CharSequence text;
             if(jsonObj.getString("code").equals("0")) {
+                if(listener != null) {
+                    listener.onSuccess(jsonObj);
+                }
                 text = "Successful registration";
             } else {
+                if(listener != null) {
+                    listener.onFailure(jsonObj.getString("msg"));
+                }
                 text = jsonObj.getString("msg");
             }
             int duration = Toast.LENGTH_SHORT;
@@ -76,5 +83,13 @@ public class HttpRequest extends AsyncTask<String, String, String> {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public IHttpRequestListener getListener() {
+        return listener;
+    }
+
+    public void setListener(IHttpRequestListener listener) {
+        this.listener = listener;
     }
 }
