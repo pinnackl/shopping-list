@@ -3,6 +3,7 @@ package com.pinnackl.shoppinglist.user;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,5 +31,11 @@ public class UserUtil {
         editor.putString("token", token);
         editor.putString("email", email);
         editor.commit();
+    }
+
+    public String getToken(Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        Log.d("Plop", "token: "+preferences.getString("token", "DEFAULT"));
+        return preferences.getString("token", "DEFAULT");
     }
 }
