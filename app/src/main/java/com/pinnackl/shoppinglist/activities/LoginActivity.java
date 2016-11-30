@@ -15,7 +15,6 @@ import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.AsyncTask;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -32,7 +31,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.pinnackl.shoppinglist.HttpRequest;
+import com.pinnackl.shoppinglist.IHttpRequestListener;
 import com.pinnackl.shoppinglist.R;
+import com.pinnackl.shoppinglist.request.Request;
+import com.pinnackl.shoppinglist.request.RequestFactory;
 import com.pinnackl.shoppinglist.user.User;
 import com.pinnackl.shoppinglist.user.UserFactory;
 import com.pinnackl.shoppinglist.user.UserUtil;
@@ -40,14 +43,6 @@ import com.pinnackl.shoppinglist.user.UserUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,11 +57,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Id to identity READ_CONTACTS permission request.
      */
     private static final int REQUEST_READ_CONTACTS = 0;
-
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
-    private UserLoginTask mAuthTask = null;
 
     // UI references.
     private AutoCompleteTextView mEmailView;
@@ -165,10 +155,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin() {
-        if (mAuthTask != null) {
-            return;
-        }
-
         // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);
@@ -206,8 +192,46 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
+//            mAuthTask = new UserLoginTask(email, password);
+//            mAuthTask.execute((Void) null);
+            Context context = getApplicationContext();
+
+            HttpRequest request = new HttpRequest(context);
+            request.setListener(new IHttpRequestListener() {
+                @Override
+                public void onFailure(String errorMessage) {
+                    Log.d("Plop", "Error: " + errorMessage);
+                    showProgress(false);
+                    mPasswordView.setError(getString(R.string.error_incorrect_password));
+                    mPasswordView.requestFocus();
+                }
+
+                @Override
+                public void onSuccess(JSONObject result) {
+                    Log.d("Plop", "Success");
+                    showProgress(false);
+                    try {
+                        Context context = getApplicationContext();
+                        JSONObject oUser = null;
+                        oUser = result.getJSONObject("result");
+                        UserFactory factory = new UserFactory();
+                        User user = factory.createUser();
+                        UserUtil util = new UserUtil();
+                        util.save(oUser, user, context);
+
+                        startActivity(new Intent(LoginActivity.this, ProductActivity.class));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            RequestFactory requestFactory = new RequestFactory();
+            Request requestObject = requestFactory.createRequest();
+            requestObject.setParameters("email", email);
+            requestObject.setParameters("password", password);
+            requestObject.setEndpoint("/account/login.php");
+
+            request.execute(requestObject);
         }
     }
 
@@ -309,90 +333,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         int ADDRESS = 0;
         int IS_PRIMARY = 1;
-    }
-
-    /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
-     */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
-
-        private final String mEmail;
-        private final String mPassword;
-        HttpURLConnection urlConnection;
-
-        UserLoginTask(String email, String password) {
-            mEmail = email;
-            mPassword = password;
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-
-            StringBuilder result = new StringBuilder();
-            try {
-                URL url = new URL("http://appspaces.fr/esgi/shopping_list/account/login.php?email="+mEmail+"&password="+mPassword);
-                urlConnection = (HttpURLConnection) url.openConnection();
-                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-
-                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    result.append(line);
-                }
-                Log.d("Plop", "Response: " + result);
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-                return false;
-            } catch (IOException e) {
-                e.printStackTrace();
-                return false;
-            } finally {
-                urlConnection.disconnect();
-            }
-
-            try {
-                JSONObject jsonObj;
-                jsonObj = new JSONObject(result.toString());
-
-                if(jsonObj.getString("code").equals("0")) {
-                    Context context = getApplicationContext();
-                    JSONObject oUser = jsonObj.getJSONObject("result");
-                    UserFactory factory = new UserFactory();
-                    User user = factory.createUser();
-                    UserUtil util = new UserUtil();
-                    util.save(oUser, user, context);
-
-                    return true;
-                } else {
-                    return false;
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                return false;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
-            showProgress(false);
-            Log.d("Plop", "Success: " + success);
-            if (success) {
-                startActivity(new Intent(LoginActivity.this, ProductActivity.class));
-            } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
-            }
-        }
-
-        @Override
-        protected void onCancelled() {
-            mAuthTask = null;
-            showProgress(false);
-        }
     }
 }
 
