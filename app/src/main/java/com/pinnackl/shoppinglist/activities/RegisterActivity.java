@@ -15,7 +15,13 @@ import android.widget.TextView;
 import com.pinnackl.shoppinglist.HttpRequest;
 import com.pinnackl.shoppinglist.IHttpRequestListener;
 import com.pinnackl.shoppinglist.R;
+import com.pinnackl.shoppinglist.request.Request;
+import com.pinnackl.shoppinglist.request.RequestFactory;
+import com.pinnackl.shoppinglist.user.User;
+import com.pinnackl.shoppinglist.user.UserFactory;
+import com.pinnackl.shoppinglist.user.UserUtil;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -106,10 +112,31 @@ public class RegisterActivity extends AppCompatActivity {
 
                 @Override
                 public void onSuccess(JSONObject result) {
-                    Log.d("Plop", "Error: error");
+                    Log.d("Plop", "Success");
+                    try {
+                        Context context = getApplicationContext();
+                        JSONObject oUser = null;
+                        oUser = result.getJSONObject("result");
+                        UserFactory factory = new UserFactory();
+                        User user = factory.createUser();
+                        UserUtil util = new UserUtil();
+                        util.save(oUser, user, context);
+
+                        startActivity(new Intent(RegisterActivity.this, ProductActivity.class));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
-            request.execute("email="+email, "&password="+password, "&firstname="+firstname, "&lastname="+lastname);
+            RequestFactory requestFactory = new RequestFactory();
+            Request requestObject = requestFactory.createRequest();
+            requestObject.setParameters("email", email);
+            requestObject.setParameters("password", password);
+            requestObject.setParameters("firstname", firstname);
+            requestObject.setParameters("lastname", lastname);
+            requestObject.setEndpoint("/account/subscribe.php");
+
+            request.execute(requestObject);
         }
     }
 

@@ -5,6 +5,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.pinnackl.shoppinglist.request.Request;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -14,8 +16,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
 
-public class HttpRequest extends AsyncTask<String, String, String> {
+public class HttpRequest extends AsyncTask<Request, Void, String> {
     HttpURLConnection urlConnection;
     private static Context context;
     private IHttpRequestListener listener;
@@ -25,18 +28,24 @@ public class HttpRequest extends AsyncTask<String, String, String> {
     }
 
     @Override
-    protected String doInBackground(String... args) {
+    protected String doInBackground(Request... requestObject) {
 
         StringBuilder result = new StringBuilder();
-        int count = args.length;
+        HashMap<String, String> parametersList = requestObject[0].getParameters();
+        String endpoint = requestObject[0].getEndpoint();
+
         String parameters = "?";
-        for (int i = 0; i < count; i++) {
-            parameters += args[i];
+        for (HashMap.Entry<String, String> entry : parametersList.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+            if(!parameters.equals("?")) {
+                parameters += "&";
+            }
+            parameters += key + "=" + value;
         }
-        Log.d("Plop", "nb args: " + count);
-        Log.d("Plop", "parameters : " + parameters);
+
         try {
-            URL url = new URL("http://appspaces.fr/esgi/shopping_list/account/subscribe.php"+parameters);
+            URL url = new URL("http://appspaces.fr/esgi/shopping_list"+endpoint+parameters);
             urlConnection = (HttpURLConnection) url.openConnection();
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
 
