@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.pinnackl.shoppinglist.CustomAdapter;
 import com.pinnackl.shoppinglist.HttpRequest;
 import com.pinnackl.shoppinglist.IHttpRequestListener;
 import com.pinnackl.shoppinglist.R;
@@ -27,6 +28,7 @@ import java.util.ArrayList;
 
 public class ProductActivity extends AppCompatActivity {
     ListView mListView;
+    Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +48,9 @@ public class ProductActivity extends AppCompatActivity {
         });
 
         // GET ALL LISTS
-        Context context = getApplicationContext();
+        mContext = getApplicationContext();
 
-        HttpRequest request = new HttpRequest(context);
+        HttpRequest request = new HttpRequest(mContext);
         request.setListener(new IHttpRequestListener() {
             @Override
             public void onFailure(String errorMessage) {
@@ -69,8 +71,7 @@ public class ProductActivity extends AppCompatActivity {
                         String listDateCreation = object.getString("created_date");
                         String listCompleted = object.getString("completed");
 
-                        ArrayAdapter<String> adapter = new ArrayAdapter<>(ProductActivity.this,
-                                android.R.layout.simple_list_item_1, names);
+                        CustomAdapter adapter = new CustomAdapter(mContext, names);
                         mListView.setAdapter(adapter);
                         Log.d("Plop", "value : " + listName);
                     }
@@ -81,7 +82,7 @@ public class ProductActivity extends AppCompatActivity {
         });
         // get token in shared preferences
         UserUtil userUtil = new UserUtil();
-        String token = userUtil.getToken(context);
+        String token = userUtil.getToken(mContext);
 
         RequestFactory requestFactory = new RequestFactory();
         Request requestObject = requestFactory.createRequest();
