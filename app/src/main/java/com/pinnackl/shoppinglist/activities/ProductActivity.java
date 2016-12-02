@@ -29,6 +29,7 @@ import java.util.ArrayList;
 public class ProductActivity extends AppCompatActivity {
     ListView mListView;
     Context mContext;
+    CustomAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,17 +64,20 @@ public class ProductActivity extends AppCompatActivity {
                 try {
                     JSONArray lists = result.getJSONArray("result");
                     ArrayList<String> names = new ArrayList<>();
+                    ArrayList<String> ids = new ArrayList<>();
                     for (int i = 0; i < lists.length(); i++) {
                         JSONObject object = lists.getJSONObject(i);
                         String listName = object.getString("name");
                         names.add(listName);
                         String listId = object.getString("id");
+                        ids.add(listId);
                         String listDateCreation = object.getString("created_date");
                         String listCompleted = object.getString("completed");
 
-                        CustomAdapter adapter = new CustomAdapter(mContext, names);
-                        mListView.setAdapter(adapter);
-                        Log.d("Plop", "value : " + listName);
+                        mAdapter = new CustomAdapter(mContext, names, ids);
+                        mListView.setAdapter(mAdapter);
+                        Log.d("Plop", "name : " + listName);
+                        Log.d("Plop", "id : " + listId);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -91,5 +95,4 @@ public class ProductActivity extends AppCompatActivity {
 
         request.execute(requestObject);
     }
-
 }

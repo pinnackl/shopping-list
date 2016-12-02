@@ -33,5 +33,6 @@
         android:layout_marginBottom="5dp"
         android:background="@android:color/transparent"
         android:visibility="visible"
+        android:clickable="true"
         android:cropToPadding="false" />
 </LinearLayout>
