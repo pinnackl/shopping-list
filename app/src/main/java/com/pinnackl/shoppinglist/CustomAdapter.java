@@ -1,15 +1,14 @@
 package com.pinnackl.shoppinglist;
 
+import android.app.Activity;
 import android.content.Context;
-import android.graphics.drawable.Icon;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,8 +16,6 @@ import com.pinnackl.shoppinglist.request.Request;
 import com.pinnackl.shoppinglist.request.RequestFactory;
 import com.pinnackl.shoppinglist.user.UserUtil;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -70,32 +67,51 @@ public class CustomAdapter extends BaseAdapter {
         imgButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HttpRequest request = new HttpRequest(mContext);
-                request.setListener(new IHttpRequestListener() {
+                mContext.setTheme(R.style.AppTheme);
+                AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
+                alert.setTitle("Suppression");
+                alert.setMessage("Etes vous sur de vouloir supprimer cette liste ?");
+                alert.setPositiveButton("OUI", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onFailure(String errorMessage) {
-                        Log.d("Plop", "Error: " + errorMessage);
-                    }
+                    public void onClick(DialogInterface dialog, int which) {
+                        HttpRequest request = new HttpRequest(mContext);
+                        request.setListener(new IHttpRequestListener() {
+                            @Override
+                            public void onFailure(String errorMessage) {
+                                Log.d("Plop", "Error: " + errorMessage);
+                            }
 
-                    @Override
-                    public void onSuccess(JSONObject result) {
-                        Log.d("Plop", "Success");
-                        Title.remove(plop);
-                        idList.remove(plop);
-                        notifyDataSetChanged();
+                            @Override
+                            public void onSuccess(JSONObject result) {
+                                Log.d("Plop", "Success");
+                                Title.remove(plop);
+                                idList.remove(plop);
+                                notifyDataSetChanged();
+                            }
+                        });
+                        // get token in shared preferences
+                        UserUtil userUtil = new UserUtil();
+                        String token = userUtil.getToken(mContext);
+
+                        RequestFactory requestFactory = new RequestFactory();
+                        Request requestObject = requestFactory.createRequest();
+                        requestObject.setParameters("token", token);
+                        requestObject.setParameters("id", idList.get(position));
+                        requestObject.setEndpoint("/shopping_list/remove.php");
+                        request.execute(requestObject);
+
+                        dialog.dismiss();
                     }
                 });
-                // get token in shared preferences
-                UserUtil userUtil = new UserUtil();
-                String token = userUtil.getToken(mContext);
+                alert.setNegativeButton("NON", new DialogInterface.OnClickListener() {
 
-                RequestFactory requestFactory = new RequestFactory();
-                Request requestObject = requestFactory.createRequest();
-                requestObject.setParameters("token", token);
-                requestObject.setParameters("id", idList.get(position));
-                requestObject.setEndpoint("/shopping_list/remove.php");
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
 
-                request.execute(requestObject);
+                        dialog.dismiss();
+                    }
+                });
+                alert.show();
             }
         });
 
