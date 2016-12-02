@@ -1,6 +1,7 @@
 package com.pinnackl.shoppinglist.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -63,6 +64,7 @@ public class AddListActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(JSONObject result) {
                     Log.d("Plop", "Success");
+                    startActivity(new Intent(AddListActivity.this, ProductActivity.class));
                 }
             });
             // get token in shared preferences

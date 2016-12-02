@@ -13,11 +13,16 @@
     tools:context="com.pinnackl.shoppinglist.activities.ProductActivity"
     tools:showIn="@layout/activity_product">
 
-    <TextView
-        android:text="@string/prompt_no_lists"
+    <ListView
+        android:id="@+id/listView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_height="wrap_content" />
+
+    <!--<TextView-->
+        <!--android:text="@string/prompt_no_lists"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/textView"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_centerHorizontal="true" />-->
 </RelativeLayout>
