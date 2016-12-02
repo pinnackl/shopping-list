@@ -1,7 +1,6 @@
 package com.pinnackl.shoppinglist.activities;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -15,11 +14,8 @@ import com.pinnackl.shoppinglist.IHttpRequestListener;
 import com.pinnackl.shoppinglist.R;
 import com.pinnackl.shoppinglist.request.Request;
 import com.pinnackl.shoppinglist.request.RequestFactory;
-import com.pinnackl.shoppinglist.user.User;
-import com.pinnackl.shoppinglist.user.UserFactory;
 import com.pinnackl.shoppinglist.user.UserUtil;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 public class AddListActivity extends AppCompatActivity {
@@ -27,17 +23,15 @@ public class AddListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_list);
         mListNameView = (EditText) findViewById(R.id.listName);
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_list);
 
         Button createListButton = (Button) findViewById(R.id.button);
         createListButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("Plop", "onClick");
                 createList();
             }
         });

@@ -35,7 +35,6 @@ public class UserUtil {
 
     public String getToken(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        Log.d("Plop", "token: "+preferences.getString("token", "DEFAULT"));
         return preferences.getString("token", "DEFAULT");
     }
 }
