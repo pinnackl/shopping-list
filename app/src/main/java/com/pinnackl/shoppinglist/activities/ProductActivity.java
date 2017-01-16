@@ -71,7 +71,7 @@ public class ProductActivity extends AppCompatActivity {
                         String listDateCreation = object.getString("created_date");
                         String listCompleted = object.getString("completed");
 
-                        mAdapter = new CustomAdapter(mContext, names, ids);
+                        mAdapter = new CustomAdapter(ProductActivity.this, names, ids);
                         mListView.setAdapter(mAdapter);
                         Log.d("Plop", "name : " + listName);
                         Log.d("Plop", "id : " + listId);

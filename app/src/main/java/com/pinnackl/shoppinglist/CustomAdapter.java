@@ -12,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.pinnackl.shoppinglist.activities.ProductActivity;
 import com.pinnackl.shoppinglist.request.Request;
 import com.pinnackl.shoppinglist.request.RequestFactory;
 import com.pinnackl.shoppinglist.user.UserUtil;
@@ -68,7 +69,7 @@ public class CustomAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 mContext.setTheme(R.style.AppTheme);
-                AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
+                AlertDialog.Builder alert = new AlertDialog.Builder(mContext);
                 alert.setTitle("Suppression");
                 alert.setMessage("Etes vous sur de vouloir supprimer cette liste ?");
                 alert.setPositiveButton("OUI", new DialogInterface.OnClickListener() {
