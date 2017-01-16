@@ -62,6 +62,7 @@ public class ProductActivity extends AppCompatActivity {
                     JSONArray lists = result.getJSONArray("result");
                     ArrayList<String> names = new ArrayList<>();
                     ArrayList<String> ids = new ArrayList<>();
+                    ArrayList<String> dates = new ArrayList<>();
                     for (int i = 0; i < lists.length(); i++) {
                         JSONObject object = lists.getJSONObject(i);
                         String listName = object.getString("name");
@@ -69,9 +70,10 @@ public class ProductActivity extends AppCompatActivity {
                         String listId = object.getString("id");
                         ids.add(listId);
                         String listDateCreation = object.getString("created_date");
+                        dates.add(listDateCreation);
                         String listCompleted = object.getString("completed");
 
-                        mAdapter = new CustomAdapter(ProductActivity.this, names, ids);
+                        mAdapter = new CustomAdapter(ProductActivity.this, names, ids, dates);
                         mListView.setAdapter(mAdapter);
                         Log.d("Plop", "name : " + listName);
                         Log.d("Plop", "id : " + listId);

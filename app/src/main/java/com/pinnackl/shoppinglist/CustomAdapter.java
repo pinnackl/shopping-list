@@ -29,11 +29,13 @@ public class CustomAdapter extends BaseAdapter {
     private Context mContext;
     private ArrayList<String> Title;
     private ArrayList<String> idList;
+    private ArrayList<String> datesList;
 
-    public CustomAdapter(Context context, ArrayList<String> names, ArrayList<String> ids) {
+    public CustomAdapter(Context context, ArrayList<String> names, ArrayList<String> ids, ArrayList<String> dates) {
         mContext = context;
         Title = names;
         idList = ids;
+        datesList = dates;
     }
 
     public int getCount() {
@@ -58,10 +60,14 @@ public class CustomAdapter extends BaseAdapter {
         row = inflater.inflate(R.layout.row, parent, false);
 
         TextView title;
+        TextView date;
         ImageView imgButton;
 
         title = (TextView) row.findViewById(R.id.txtTitle);
         title.setText(Title.get(position));
+
+        date = (TextView) row.findViewById(R.id.txtDate);
+        date.setText(datesList.get(position));
 
         imgButton = (ImageView) row.findViewById(R.id.imageButton);
         imgButton.setImageDrawable(mContext.getDrawable((R.drawable.ic_delete)));
