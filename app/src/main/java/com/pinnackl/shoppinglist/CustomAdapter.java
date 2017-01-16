@@ -3,6 +3,7 @@ package com.pinnackl.shoppinglist;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.pinnackl.shoppinglist.activities.AddListActivity;
 import com.pinnackl.shoppinglist.activities.ProductActivity;
 import com.pinnackl.shoppinglist.request.Request;
 import com.pinnackl.shoppinglist.request.RequestFactory;
@@ -58,6 +60,13 @@ public class CustomAdapter extends BaseAdapter {
         LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View row;
         row = inflater.inflate(R.layout.row, parent, false);
+        row.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // open item activity
+                Log.d("Plop", "Error: " + position);
+            }
+        });
 
         TextView title;
         TextView date;
