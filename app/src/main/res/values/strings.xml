@@ -27,4 +27,5 @@
     <string name="prompt_no_lists">There isn\'t any shopping list yet.</string>
     <string name="action_create_list">Create list</string>
     <string name="prompt_shopping_list_name">Shopping list name</string>
+    <string name="action_edit_list">Edit list</string>
 </resources>

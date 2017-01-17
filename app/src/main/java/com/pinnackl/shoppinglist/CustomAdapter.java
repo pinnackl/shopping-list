@@ -1,6 +1,5 @@
 package com.pinnackl.shoppinglist;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,8 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.pinnackl.shoppinglist.activities.AddListActivity;
-import com.pinnackl.shoppinglist.activities.ProductActivity;
+import com.pinnackl.shoppinglist.activities.EditListActivity;
 import com.pinnackl.shoppinglist.request.Request;
 import com.pinnackl.shoppinglist.request.RequestFactory;
 import com.pinnackl.shoppinglist.user.UserUtil;
@@ -71,12 +69,13 @@ public class CustomAdapter extends BaseAdapter {
         TextView title;
         TextView date;
         ImageView imgButton;
+        ImageView editButton;
 
         title = (TextView) row.findViewById(R.id.txtTitle);
         title.setText(Title.get(position));
 
-        date = (TextView) row.findViewById(R.id.txtDate);
-        date.setText(datesList.get(position));
+        //date = (TextView) row.findViewById(R.id.txtDate);
+        //date.setText(datesList.get(position));
 
         imgButton = (ImageView) row.findViewById(R.id.imageButton);
         imgButton.setImageDrawable(mContext.getDrawable((R.drawable.ic_delete)));
@@ -131,6 +130,21 @@ public class CustomAdapter extends BaseAdapter {
             }
         });
 
+        editButton = (ImageView) row.findViewById(R.id.editButton);
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // get token in shared preferences
+                UserUtil userUtil = new UserUtil();
+                String token = userUtil.getToken(mContext);
+
+                Intent intent = new Intent(mContext, EditListActivity.class);
+                intent.putExtra("id", idList.get(position));
+                intent.putExtra("token", token);
+                intent.putExtra("name", Title.get(position));
+                mContext.startActivity(intent);
+            }
+        });
         return (row);
     }
 }
