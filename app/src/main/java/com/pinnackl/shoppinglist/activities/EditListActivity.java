@@ -37,9 +37,6 @@ public class EditListActivity extends AppCompatActivity {
         token = getIntent().getStringExtra("token");
 
         mListNameView.setText(name);
-        Log.d("id", getIntent().getStringExtra("id"));
-        Log.d("name", getIntent().getStringExtra("name"));
-        Log.d("token", getIntent().getStringExtra("token"));
 
         Button createListButton = (Button) findViewById(R.id.button);
         createListButton.setOnClickListener(new View.OnClickListener() {

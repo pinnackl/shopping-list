@@ -9,8 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ViewSwitcher;
 
 import com.pinnackl.shoppinglist.activities.EditListActivity;
 import com.pinnackl.shoppinglist.request.Request;
@@ -55,8 +57,8 @@ public class CustomAdapter extends BaseAdapter {
 
     public View getView(final int position, View convertView, ViewGroup parent) {
         final int plop = position;
+        final View row;
         LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View row;
         row = inflater.inflate(R.layout.row, parent, false);
         row.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,12 +69,16 @@ public class CustomAdapter extends BaseAdapter {
         });
 
         TextView title;
+        TextView editTitle;
         TextView date;
         ImageView imgButton;
         ImageView editButton;
 
         title = (TextView) row.findViewById(R.id.txtTitle);
         title.setText(Title.get(position));
+
+        editTitle = (TextView) row.findViewById(R.id.editTitle);
+        editTitle.setText(Title.get(position));
 
         //date = (TextView) row.findViewById(R.id.txtDate);
         //date.setText(datesList.get(position));
@@ -134,15 +140,23 @@ public class CustomAdapter extends BaseAdapter {
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ViewSwitcher switcher = (ViewSwitcher) row.findViewById(R.id.switcher);
+                switcher.showNext();
+
+                EditText editText = (EditText) row.findViewById(R.id.editTitle);
+                editText.requestFocus();
+                int id = switcher.getNextView().getId();
+                Log.d("test", String.valueOf(id));
+
                 // get token in shared preferences
-                UserUtil userUtil = new UserUtil();
+                /*UserUtil userUtil = new UserUtil();
                 String token = userUtil.getToken(mContext);
 
                 Intent intent = new Intent(mContext, EditListActivity.class);
                 intent.putExtra("id", idList.get(position));
                 intent.putExtra("token", token);
                 intent.putExtra("name", Title.get(position));
-                mContext.startActivity(intent);
+                mContext.startActivity(intent);*/
             }
         });
         return (row);
