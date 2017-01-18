@@ -5,7 +5,6 @@
     android:orientation="horizontal"
     android:layout_width="fill_parent"
     android:layout_height="60dp"
-    android:padding="10dp"
     android:weightSum="1">
 
     <ViewSwitcher
@@ -36,7 +35,7 @@
             android:textStyle="bold"
             android:textSize="22dp"
             android:textColor="#000000"
-            android:drawableRight="@android:drawable/ic_delete"
+            android:drawableRight="@drawable/ic_validate_input"
             android:layout_weight="1" />
     </ViewSwitcher>
 
