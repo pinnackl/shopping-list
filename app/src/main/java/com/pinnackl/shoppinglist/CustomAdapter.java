@@ -3,7 +3,6 @@ package com.pinnackl.shoppinglist;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.hardware.input.InputManager;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
@@ -11,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
@@ -19,7 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
-import com.pinnackl.shoppinglist.activities.EditListActivity;
+import com.pinnackl.shoppinglist.activities.ItemActivity;
+import com.pinnackl.shoppinglist.activities.LoginActivity;
 import com.pinnackl.shoppinglist.activities.ProductActivity;
 import com.pinnackl.shoppinglist.request.Request;
 import com.pinnackl.shoppinglist.request.RequestFactory;
@@ -74,7 +73,15 @@ public class CustomAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 // open item activity
-                Log.d("Plop", "Error: " + position);
+                // get token in shared preferences
+                UserUtil userUtil = new UserUtil();
+                String token = userUtil.getToken(mContext);
+
+                Intent intent = new Intent(mContext, ItemActivity.class);
+                intent.putExtra("id", idList.get(position));
+                intent.putExtra("token", token);
+                intent.putExtra("name", Title.get(position));
+                mContext.startActivity(intent);
             }
         });
 

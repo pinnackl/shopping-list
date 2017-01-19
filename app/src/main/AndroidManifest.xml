@@ -27,7 +27,7 @@
         <activity android:name=".activities.RegisterActivity" />
         <activity android:name=".activities.ProductActivity" />
         <activity android:name=".activities.AddListActivity" />
-        <activity android:name=".activities.EditListActivity"></activity>
+        <activity android:name=".activities.ItemActivity"></activity>
     </application>
 
 </manifest>
