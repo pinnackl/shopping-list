@@ -103,6 +103,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             }
         });
+
+        Context context = getApplicationContext();
+        UserUtil util = new UserUtil();
+        if(util.hasAlreadyRegistered(context) == true) {
+            startActivity(new Intent(LoginActivity.this, ProductActivity.class));
+        }
     }
 
     private void populateAutoComplete() {

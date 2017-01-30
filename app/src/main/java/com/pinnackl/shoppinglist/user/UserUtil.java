@@ -37,4 +37,14 @@ public class UserUtil {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         return preferences.getString("token", "DEFAULT");
     }
+
+    public boolean hasAlreadyRegistered(Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        Log.d("PREFERENCES", preferences.getString("token", "DEFAULT"));
+        if(preferences.getString("token", "DEFAULT") != "") {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
