@@ -1,9 +1,12 @@
 package com.pinnackl.shoppinglist.user;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
+
+import com.pinnackl.shoppinglist.activities.LoginActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,11 +43,18 @@ public class UserUtil {
 
     public boolean hasAlreadyRegistered(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        Log.d("PREFERENCES", preferences.getString("token", "DEFAULT"));
         if(preferences.getString("token", "DEFAULT") != "") {
             return true;
         } else {
             return false;
         }
+    }
+
+    public void logout(Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("token", "");
+        editor.commit();
+        context.startActivity(new Intent(context, LoginActivity.class));
     }
 }
