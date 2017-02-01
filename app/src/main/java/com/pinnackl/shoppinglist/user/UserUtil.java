@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.pinnackl.shoppinglist.activities.LoginActivity;
@@ -43,10 +44,12 @@ public class UserUtil {
 
     public boolean hasAlreadyRegistered(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        if(preferences.getString("token", "DEFAULT") != "") {
-            return true;
-        } else {
+        String token = preferences.getString("token", "DEFAULT");
+
+        if(TextUtils.isEmpty(token) || token.equals("DEFAULT")) {
             return false;
+        } else {
+            return true;
         }
     }
 

@@ -28,4 +28,10 @@
     <string name="action_create_list">Create list</string>
     <string name="prompt_shopping_list_name">Shopping list name</string>
     <string name="action_edit_list">Edit list</string>
+
+    <!-- Strings related to shopping list items -->
+    <string name="action_add_item">Add a product</string>
+    <string name="prompt_no_items">There isn\'t any product yet.</string>
+    <string name="action_create_item">Create product</string>
+    <string name="prompt_item_name">Product name</string>
 </resources>
