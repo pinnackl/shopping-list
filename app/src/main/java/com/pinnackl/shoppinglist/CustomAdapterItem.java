@@ -65,7 +65,7 @@ public class CustomAdapterItem extends BaseAdapter {
         ImageView imgButton;
 
         LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        row = inflater.inflate(R.layout.row, parent, false);
+        row = inflater.inflate(R.layout.row_item, parent, false);
         row.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
