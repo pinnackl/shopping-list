@@ -24,6 +24,7 @@ public class AddItemActivity extends AppCompatActivity {
     private EditText mItemNameView;
     private NumberPicker mNumberPicker;
     private String id;
+    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,11 @@ public class AddItemActivity extends AppCompatActivity {
         mNumberPicker.setMinValue(1);
         mNumberPicker.setMaxValue(100);
         mNumberPicker.setWrapSelectorWheel(false);
+
+        // get token in shared preferences
+        Context context = getApplicationContext();
+        UserUtil userUtil = new UserUtil();
+        token = userUtil.getToken(context);
 
         id = getIntent().getStringExtra("id");
 
@@ -76,7 +82,10 @@ public class AddItemActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(JSONObject result) {
                     Log.d("Plop", "Success");
-                    startActivity(new Intent(AddItemActivity.this, ItemActivity.class));
+                    Intent intent = new Intent(AddItemActivity.this, ItemActivity.class);
+                    intent.putExtra("id", id);
+                    intent.putExtra("token", token);
+                    AddItemActivity.this.startActivity(intent);
                 }
             });
             // get token in shared preferences
