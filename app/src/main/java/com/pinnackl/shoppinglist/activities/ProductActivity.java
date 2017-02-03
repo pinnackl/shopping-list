@@ -1,5 +1,6 @@
 package com.pinnackl.shoppinglist.activities;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -94,8 +95,6 @@ public class ProductActivity extends AppCompatActivity
 
                         mAdapter = new CustomAdapter(ProductActivity.this, names, ids, dates);
                         mListView.setAdapter(mAdapter);
-                        Log.d("Plop", "name : " + listName);
-                        Log.d("Plop", "id : " + listId);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -152,18 +151,10 @@ public class ProductActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.log_out) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+            UserUtil userUtil = new UserUtil();
+            userUtil.logout(ProductActivity.this);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

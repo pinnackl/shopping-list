@@ -87,7 +87,6 @@ public class CustomAdapter extends BaseAdapter {
 
         final TextView title;
         TextView editTitle;
-        TextView date;
         ImageView imgButton;
         ImageView editButton;
 
@@ -96,9 +95,6 @@ public class CustomAdapter extends BaseAdapter {
 
         editTitle = (TextView) row.findViewById(R.id.editTitle);
         editTitle.setText(Title.get(position));
-
-        //date = (TextView) row.findViewById(R.id.txtDate);
-        //date.setText(datesList.get(position));
 
         imgButton = (ImageView) row.findViewById(R.id.imageButton);
         imgButton.setImageDrawable(mContext.getDrawable((R.drawable.ic_delete)));
