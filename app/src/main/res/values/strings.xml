@@ -20,9 +20,9 @@
     <string name="prompt_lastname">Lastname</string>
     <string name="action_register">Register</string>
     <string name="action_account">Already have an account ? Sign in</string>
-    <string name="title_activity_product">ProductActivity</string>
 
     <!-- Strings related to shopping list -->
+    <string name="title_activity_product">Shopping lists</string>
     <string name="action_add_list">Add a shopping list</string>
     <string name="prompt_no_lists">There isn\'t any shopping list yet.</string>
     <string name="action_create_list">Create list</string>
@@ -34,4 +34,12 @@
     <string name="prompt_no_items">There isn\'t any product yet.</string>
     <string name="action_create_item">Create product</string>
     <string name="prompt_item_name">Product name</string>
+
+    <!-- Strings related to menu -->
+    <string name="title_activity_menu">MenuActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 </resources>

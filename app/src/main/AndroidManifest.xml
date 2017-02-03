@@ -25,10 +25,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.RegisterActivity" />
-        <activity android:name=".activities.ProductActivity" />
+        <activity
+            android:name=".activities.ProductActivity"
+            android:label="@string/title_activity_product"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".activities.AddListActivity" />
         <activity android:name=".activities.ItemActivity" />
-        <activity android:name=".activities.AddItemActivity"></activity>
+        <activity android:name=".activities.AddItemActivity" />
     </application>
 
 </manifest>

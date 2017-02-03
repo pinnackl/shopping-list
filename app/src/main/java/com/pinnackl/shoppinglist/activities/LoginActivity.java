@@ -107,6 +107,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         Context context = getApplicationContext();
         UserUtil util = new UserUtil();
         if(util.hasAlreadyRegistered(context) == true) {
+            //startActivity(new Intent(LoginActivity.this, MenuActivity.class));
             startActivity(new Intent(LoginActivity.this, ProductActivity.class));
         }
     }
