@@ -70,6 +70,7 @@ public class ItemActivity extends AppCompatActivity {
                     JSONArray items = result.getJSONArray("result");
                     ArrayList<String> names = new ArrayList<>();
                     ArrayList<String> ids = new ArrayList<>();
+                    ArrayList<String> nbProducts = new ArrayList<>();
 
                     for (int i = 0; i < items.length(); i++) {
                         JSONObject object = items.getJSONObject(i);
@@ -77,11 +78,14 @@ public class ItemActivity extends AppCompatActivity {
                         names.add(itemName);
                         String itemId = object.getString("id");
                         ids.add(itemId);
+                        String quantity = object.getString("quantity");
+                        nbProducts.add(quantity);
 
-                        mAdapter = new CustomAdapterItem(ItemActivity.this, names, ids);
+                        mAdapter = new CustomAdapterItem(ItemActivity.this, names, ids, nbProducts);
                         mListView.setAdapter(mAdapter);
                         Log.d("Plop", "name : " + itemName);
                         Log.d("Plop", "id : " + itemId);
+                        Log.d("Plop", "quantity : " + quantity);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

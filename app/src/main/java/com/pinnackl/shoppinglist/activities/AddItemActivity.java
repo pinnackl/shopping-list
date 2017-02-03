@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 
 import com.pinnackl.shoppinglist.HttpRequest;
 import com.pinnackl.shoppinglist.IHttpRequestListener;
@@ -21,6 +22,7 @@ import org.json.JSONObject;
 
 public class AddItemActivity extends AppCompatActivity {
     private EditText mItemNameView;
+    private NumberPicker mNumberPicker;
     private String id;
 
     @Override
@@ -29,6 +31,11 @@ public class AddItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_item);
 
         mItemNameView = (EditText) findViewById(R.id.itemName);
+        mNumberPicker = (NumberPicker) findViewById(R.id.numberPicker);
+
+        mNumberPicker.setMinValue(1);
+        mNumberPicker.setMaxValue(100);
+        mNumberPicker.setWrapSelectorWheel(false);
 
         id = getIntent().getStringExtra("id");
 
@@ -43,6 +50,8 @@ public class AddItemActivity extends AppCompatActivity {
 
     public boolean createItem() {
         String listName = mItemNameView.getText().toString();
+        Integer nbProducts = mNumberPicker.getValue();
+
         View focusView = null;
         boolean cancel = false;
 
@@ -67,7 +76,7 @@ public class AddItemActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(JSONObject result) {
                     Log.d("Plop", "Success");
-                    startActivity(new Intent(AddItemActivity.this, ProductActivity.class));
+                    startActivity(new Intent(AddItemActivity.this, ItemActivity.class));
                 }
             });
             // get token in shared preferences
@@ -79,6 +88,7 @@ public class AddItemActivity extends AppCompatActivity {
             requestObject.setParameters("name", listName);
             requestObject.setParameters("token", token);
             requestObject.setParameters("shopping_list_id", id);
+            requestObject.setParameters("quantity", String.valueOf(nbProducts));
             requestObject.setEndpoint("/product/create.php");
 
             request.execute(requestObject);

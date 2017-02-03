@@ -22,13 +22,20 @@
         android:layout_marginTop="44dp"
         android:id="@+id/itemName" />
 
+    <NumberPicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/numberPicker"
+        android:layout_below="@+id/itemName"
+        android:layout_centerHorizontal="true" />
+
     <Button
         android:text="@string/action_create_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:id="@+id/button"
-        android:layout_below="@+id/itemName"
+        android:layout_below="@+id/numberPicker"
         android:layout_centerHorizontal="true" />
+
 
 </RelativeLayout>

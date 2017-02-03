@@ -36,11 +36,13 @@ public class CustomAdapterItem extends BaseAdapter {
     private Context mContext;
     private ArrayList<String> Title;
     private ArrayList<String> idItem;
+    private ArrayList<String> quantity;
 
-    public CustomAdapterItem(Context context, ArrayList<String> names, ArrayList<String> ids) {
+    public CustomAdapterItem(Context context, ArrayList<String> names, ArrayList<String> ids, ArrayList<String> nbProducts) {
         mContext = context;
         Title = names;
         idItem = ids;
+        quantity = nbProducts;
     }
 
     public int getCount() {
@@ -62,6 +64,7 @@ public class CustomAdapterItem extends BaseAdapter {
         final int plop = position;
         final View row;
         final TextView title;
+        final TextView nbProducts;
         ImageView imgButton;
 
         LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -76,6 +79,9 @@ public class CustomAdapterItem extends BaseAdapter {
         title = (TextView) row.findViewById(R.id.txtTitle);
         title.setText(Title.get(position));
 
+        nbProducts = (TextView) row.findViewById(R.id.quantity);
+        nbProducts.setText(quantity.get(position));
+
         imgButton = (ImageView) row.findViewById(R.id.imageButton);
         imgButton.setImageDrawable(mContext.getDrawable((R.drawable.ic_delete)));
         imgButton.setOnClickListener(new View.OnClickListener() {
@@ -84,7 +90,7 @@ public class CustomAdapterItem extends BaseAdapter {
                 mContext.setTheme(R.style.AppTheme);
                 AlertDialog.Builder alert = new AlertDialog.Builder(mContext);
                 alert.setTitle("Suppression");
-                alert.setMessage("Etes vous sur de vouloir supprimer cette liste ?");
+                alert.setMessage("Etes vous sur de vouloir supprimer ce produit ?");
                 alert.setPositiveButton("OUI", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
