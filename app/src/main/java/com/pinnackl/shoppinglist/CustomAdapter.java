@@ -18,8 +18,6 @@ import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
 import com.pinnackl.shoppinglist.activities.ItemActivity;
-import com.pinnackl.shoppinglist.activities.LoginActivity;
-import com.pinnackl.shoppinglist.activities.ProductActivity;
 import com.pinnackl.shoppinglist.request.Request;
 import com.pinnackl.shoppinglist.request.RequestFactory;
 import com.pinnackl.shoppinglist.user.UserUtil;
