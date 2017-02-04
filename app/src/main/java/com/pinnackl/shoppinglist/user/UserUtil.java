@@ -53,6 +53,11 @@ public class UserUtil {
         }
     }
 
+    public String get(Context context, String key) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return preferences.getString(key, "DEFAULT");
+    }
+
     public void logout(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = preferences.edit();

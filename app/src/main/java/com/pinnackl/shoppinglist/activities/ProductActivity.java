@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.pinnackl.shoppinglist.CustomAdapter;
 import com.pinnackl.shoppinglist.HttpRequest;
@@ -105,6 +106,19 @@ public class ProductActivity extends AppCompatActivity
         UserUtil userUtil = new UserUtil();
         String token = userUtil.getToken(mContext);
 
+        // set menu header values
+        String email = userUtil.get(mContext, "email");
+        String firstName = userUtil.get(mContext, "firstname");
+        String lastName = userUtil.get(mContext, "lastname");
+
+        View header = navigationView.getHeaderView(0);
+
+        TextView emailHeader = (TextView)header.findViewById(R.id.email);
+        TextView nameHeader = (TextView)header.findViewById(R.id.name);
+        emailHeader.setText(email);
+        nameHeader.setText(firstName + " " + lastName);
+
+        // get shopping lists
         RequestFactory requestFactory = new RequestFactory();
         Request requestObject = requestFactory.createRequest();
         requestObject.setParameters("token", token);
@@ -125,7 +139,6 @@ public class ProductActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
