@@ -3,6 +3,9 @@ package com.pinnackl.shoppinglist;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
@@ -12,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -66,6 +71,7 @@ public class CustomAdapterItem extends BaseAdapter {
         final TextView title;
         final TextView nbProducts;
         ImageView imgButton;
+        CheckBox checkBox;
 
         LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         row = inflater.inflate(R.layout.row_item, parent, false);
@@ -81,6 +87,25 @@ public class CustomAdapterItem extends BaseAdapter {
 
         nbProducts = (TextView) row.findViewById(R.id.quantity);
         nbProducts.setText(quantity.get(position));
+
+        checkBox = (CheckBox) row.findViewById(R.id.checkBox);
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (buttonView.isChecked()) {
+                    Log.d("checked:", "true");
+                    title.setPaintFlags(title.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    title.setTextColor(Color.GRAY);
+                }
+                else {
+                    Log.d("checked:", "false");
+                    title.setPaintFlags(title.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
+                    title.setTextColor(Color.BLACK);
+                }
+
+            }
+        });
+
 
         imgButton = (ImageView) row.findViewById(R.id.imageButton);
         imgButton.setImageDrawable(mContext.getDrawable((R.drawable.ic_delete)));
