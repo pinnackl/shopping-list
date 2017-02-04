@@ -1,6 +1,5 @@
 package com.pinnackl.shoppinglist.activities;
 
-import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
