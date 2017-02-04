@@ -2,6 +2,8 @@ package com.pinnackl.shoppinglist.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,7 +23,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ItemActivity extends AppCompatActivity {
     private String id;
@@ -56,6 +62,19 @@ public class ItemActivity extends AppCompatActivity {
 
         mContext = getApplicationContext();
 
+        try {
+            String[] aProducts = new String[0];
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+            if(preferences.getString(id, "DEFAULT").equals("DEFAULT")) {
+                SharedPreferences.Editor editor = preferences.edit();
+                JSONArray jsonArray = new JSONArray(aProducts);
+                editor.putString(id, jsonArray.toString());
+                editor.commit();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         HttpRequest request = new HttpRequest(mContext);
         request.setListener(new IHttpRequestListener() {
             @Override
@@ -81,11 +100,8 @@ public class ItemActivity extends AppCompatActivity {
                         String quantity = object.getString("quantity");
                         nbProducts.add(quantity);
 
-                        mAdapter = new CustomAdapterItem(ItemActivity.this, names, ids, nbProducts);
+                        mAdapter = new CustomAdapterItem(ItemActivity.this, names, ids, nbProducts, id);
                         mListView.setAdapter(mAdapter);
-                        Log.d("Plop", "name : " + itemName);
-                        Log.d("Plop", "id : " + itemId);
-                        Log.d("Plop", "quantity : " + quantity);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

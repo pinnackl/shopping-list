@@ -3,9 +3,11 @@ package com.pinnackl.shoppinglist;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
@@ -29,6 +31,8 @@ import com.pinnackl.shoppinglist.request.Request;
 import com.pinnackl.shoppinglist.request.RequestFactory;
 import com.pinnackl.shoppinglist.user.UserUtil;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -42,12 +46,14 @@ public class CustomAdapterItem extends BaseAdapter {
     private ArrayList<String> Title;
     private ArrayList<String> idItem;
     private ArrayList<String> quantity;
+    private String listId;
 
-    public CustomAdapterItem(Context context, ArrayList<String> names, ArrayList<String> ids, ArrayList<String> nbProducts) {
+    public CustomAdapterItem(Context context, ArrayList<String> names, ArrayList<String> ids, ArrayList<String> nbProducts, String id) {
         mContext = context;
         Title = names;
         idItem = ids;
         quantity = nbProducts;
+        listId = id;
     }
 
     public int getCount() {
@@ -89,6 +95,24 @@ public class CustomAdapterItem extends BaseAdapter {
         nbProducts.setText(quantity.get(position));
 
         checkBox = (CheckBox) row.findViewById(R.id.checkBox);
+
+        // if we found product id in shared preferences, we disable the row
+        try {
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+
+            String jsonProductList = preferences.getString(listId, "DEFAULT");
+            JSONArray aJsonProductList = new JSONArray(jsonProductList);
+            for (int i = 0; i < aJsonProductList.length(); i++) {
+                if(aJsonProductList.getString(i).equals(idItem.get(position))) {
+                    title.setPaintFlags(title.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    title.setTextColor(Color.GRAY);
+                    checkBox.setChecked(true);
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -96,11 +120,44 @@ public class CustomAdapterItem extends BaseAdapter {
                     Log.d("checked:", "true");
                     title.setPaintFlags(title.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                     title.setTextColor(Color.GRAY);
+
+                    try {
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+                        SharedPreferences.Editor editor = preferences.edit();
+
+                        String jsonProductList = preferences.getString(listId, "DEFAULT");
+                        JSONArray aJsonProductList = new JSONArray(jsonProductList);
+                        aJsonProductList.put(idItem.get(position));
+
+                        jsonProductList = aJsonProductList.toString();
+                        editor.putString(listId, jsonProductList);
+                        editor.commit();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
                 else {
                     Log.d("checked:", "false");
                     title.setPaintFlags(title.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
                     title.setTextColor(Color.BLACK);
+
+                    try {
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+                        SharedPreferences.Editor editor = preferences.edit();
+
+                        String jsonProductList = preferences.getString(listId, "DEFAULT");
+                        JSONArray aJsonProductList = new JSONArray(jsonProductList);
+                        for (int i = 0; i < aJsonProductList.length(); i++) {
+                            if(aJsonProductList.getString(i).equals(idItem.get(position))) {
+                                aJsonProductList.remove(i);
+                            }
+                        }
+                        jsonProductList = aJsonProductList.toString();
+                        editor.putString(listId, jsonProductList);
+                        editor.commit();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
 
             }
