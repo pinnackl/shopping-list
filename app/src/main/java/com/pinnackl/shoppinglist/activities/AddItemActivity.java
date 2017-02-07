@@ -2,10 +2,12 @@ package com.pinnackl.shoppinglist.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,6 +32,8 @@ public class AddItemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_item);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mItemNameView = (EditText) findViewById(R.id.itemName);
         mNumberPicker = (NumberPicker) findViewById(R.id.numberPicker);
@@ -103,6 +107,15 @@ public class AddItemActivity extends AppCompatActivity {
             request.execute(requestObject);
         }
 
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Intent intent = new Intent(AddItemActivity.this, ItemActivity.class);
+        intent.putExtra("id", id);
+        intent.putExtra("token", token);
+        AddItemActivity.this.startActivity(intent);
         return true;
     }
 }
