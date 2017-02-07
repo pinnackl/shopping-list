@@ -30,6 +30,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pinnackl.shoppinglist.HttpRequest;
 import com.pinnackl.shoppinglist.IHttpRequestListener;
@@ -206,7 +207,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             request.setListener(new IHttpRequestListener() {
                 @Override
                 public void onFailure(String errorMessage) {
-                    Log.d("Plop", "Error: " + errorMessage);
                     showProgress(false);
                     mPasswordView.setError(getString(R.string.error_incorrect_password));
                     mPasswordView.requestFocus();
@@ -214,16 +214,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                 @Override
                 public void onSuccess(JSONObject result) {
-                    Log.d("Plop", "Success");
                     showProgress(false);
                     try {
                         Context context = getApplicationContext();
-                        JSONObject oUser = null;
-                        oUser = result.getJSONObject("result");
+                        JSONObject oUser = result.getJSONObject("result");
                         UserFactory factory = new UserFactory();
                         User user = factory.createUser();
                         UserUtil util = new UserUtil();
                         util.save(oUser, user, context);
+
+                        Toast toast = Toast.makeText(LoginActivity.this, "Successful Login", Toast.LENGTH_SHORT);
+                        toast.show();
 
                         startActivity(new Intent(LoginActivity.this, ProductActivity.class));
                     } catch (JSONException e) {

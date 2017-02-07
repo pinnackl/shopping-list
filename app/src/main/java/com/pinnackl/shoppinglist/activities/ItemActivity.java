@@ -84,7 +84,6 @@ public class ItemActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(JSONObject result) {
-                Log.d("Plop", "Success");
                 try {
                     JSONArray items = result.getJSONArray("result");
                     ArrayList<String> names = new ArrayList<>();

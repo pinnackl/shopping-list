@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
+import android.widget.Toast;
 
 import com.pinnackl.shoppinglist.HttpRequest;
 import com.pinnackl.shoppinglist.IHttpRequestListener;
@@ -80,12 +81,14 @@ public class AddItemActivity extends AppCompatActivity {
             request.setListener(new IHttpRequestListener() {
                 @Override
                 public void onFailure(String errorMessage) {
-                    Log.d("Plop", "Error: " + errorMessage);
+                    Toast toast = Toast.makeText(AddItemActivity.this, "Error", Toast.LENGTH_SHORT);
+                    toast.show();
                 }
 
                 @Override
                 public void onSuccess(JSONObject result) {
-                    Log.d("Plop", "Success");
+                    Toast toast = Toast.makeText(AddItemActivity.this, "Product created", Toast.LENGTH_SHORT);
+                    toast.show();
                     Intent intent = new Intent(AddItemActivity.this, ItemActivity.class);
                     intent.putExtra("id", id);
                     intent.putExtra("token", token);

@@ -73,22 +73,15 @@ public class HttpRequest extends AsyncTask<Request, Void, String> {
         try {
             JSONObject jsonObj = new JSONObject(result.toString());
 
-            CharSequence text;
             if(jsonObj.getString("code").equals("0")) {
                 if(listener != null) {
                     listener.onSuccess(jsonObj);
                 }
-                text = "Successful registration";
             } else {
                 if(listener != null) {
                     listener.onFailure(jsonObj.getString("msg"));
                 }
-                text = jsonObj.getString("msg");
             }
-            int duration = Toast.LENGTH_SHORT;
-
-            Toast toast = Toast.makeText(this.context, text, duration);
-            toast.show();
         } catch (JSONException e) {
             e.printStackTrace();
         }

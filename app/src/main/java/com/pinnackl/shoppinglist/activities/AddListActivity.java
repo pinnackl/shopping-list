@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.pinnackl.shoppinglist.HttpRequest;
 import com.pinnackl.shoppinglist.IHttpRequestListener;
@@ -58,12 +59,14 @@ public class AddListActivity extends AppCompatActivity {
             request.setListener(new IHttpRequestListener() {
                 @Override
                 public void onFailure(String errorMessage) {
-                    Log.d("Plop", "Error: " + errorMessage);
+                    Toast toast = Toast.makeText(AddListActivity.this, "Error", Toast.LENGTH_SHORT);
+                    toast.show();
                 }
 
                 @Override
                 public void onSuccess(JSONObject result) {
-                    Log.d("Plop", "Success");
+                    Toast toast = Toast.makeText(AddListActivity.this, "List created", Toast.LENGTH_SHORT);
+                    toast.show();
                     startActivity(new Intent(AddListActivity.this, ProductActivity.class));
                 }
             });

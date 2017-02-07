@@ -11,6 +11,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pinnackl.shoppinglist.HttpRequest;
 import com.pinnackl.shoppinglist.IHttpRequestListener;
@@ -112,7 +113,6 @@ public class RegisterActivity extends AppCompatActivity {
 
                 @Override
                 public void onSuccess(JSONObject result) {
-                    Log.d("Plop", "Success");
                     try {
                         Context context = getApplicationContext();
                         JSONObject oUser = null;
@@ -121,6 +121,9 @@ public class RegisterActivity extends AppCompatActivity {
                         User user = factory.createUser();
                         UserUtil util = new UserUtil();
                         util.save(oUser, user, context);
+
+                        Toast toast = Toast.makeText(RegisterActivity.this, "Successful registration", Toast.LENGTH_SHORT);
+                        toast.show();
 
                         startActivity(new Intent(RegisterActivity.this, ProductActivity.class));
                     } catch (JSONException e) {

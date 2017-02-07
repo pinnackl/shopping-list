@@ -15,6 +15,7 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.pinnackl.shoppinglist.activities.ItemActivity;
@@ -110,15 +111,17 @@ public class CustomAdapter extends BaseAdapter {
                         request.setListener(new IHttpRequestListener() {
                             @Override
                             public void onFailure(String errorMessage) {
-                                Log.d("Plop", "Error: " + errorMessage);
+                                Toast toast = Toast.makeText(mContext, "Error", Toast.LENGTH_SHORT);
+                                toast.show();
                             }
 
                             @Override
                             public void onSuccess(JSONObject result) {
-                                Log.d("Plop", "Success");
                                 Title.remove(plop);
                                 idList.remove(plop);
                                 notifyDataSetChanged();
+                                Toast toast = Toast.makeText(mContext, "List deleted", Toast.LENGTH_SHORT);
+                                toast.show();
                             }
                         });
                         // get token in shared preferences
@@ -185,7 +188,8 @@ public class CustomAdapter extends BaseAdapter {
                                           request.setListener(new IHttpRequestListener() {
                                               @Override
                                               public void onFailure(String errorMessage) {
-                                                  Log.d("Plop", "Error: " + errorMessage);
+                                                  Toast toast = Toast.makeText(mContext, "Error", Toast.LENGTH_SHORT);
+                                                  toast.show();
                                               }
 
                                               @Override
@@ -195,6 +199,8 @@ public class CustomAdapter extends BaseAdapter {
                                                   isEditing = false;
                                                   imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
                                                   switcher.showNext();
+                                                  Toast toast = Toast.makeText(mContext, "Product updated", Toast.LENGTH_SHORT);
+                                                  toast.show();
                                               }
                                           });
                                           UserUtil userUtil = new UserUtil();

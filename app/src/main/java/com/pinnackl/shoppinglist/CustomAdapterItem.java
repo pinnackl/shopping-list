@@ -16,6 +16,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pinnackl.shoppinglist.request.Request;
 import com.pinnackl.shoppinglist.request.RequestFactory;
@@ -170,7 +171,8 @@ public class CustomAdapterItem extends BaseAdapter {
                         request.setListener(new IHttpRequestListener() {
                             @Override
                             public void onFailure(String errorMessage) {
-                                Log.d("Plop", "Error: " + errorMessage);
+                                Toast toast = Toast.makeText(mContext, "Error", Toast.LENGTH_SHORT);
+                                toast.show();
                             }
 
                             @Override
@@ -179,6 +181,8 @@ public class CustomAdapterItem extends BaseAdapter {
                                 Title.remove(plop);
                                 idItem.remove(plop);
                                 notifyDataSetChanged();
+                                Toast toast = Toast.makeText(mContext, "Product deleted", Toast.LENGTH_SHORT);
+                                toast.show();
                             }
                         });
                         // get token in shared preferences
