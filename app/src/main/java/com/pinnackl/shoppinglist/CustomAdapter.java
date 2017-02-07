@@ -102,8 +102,8 @@ public class CustomAdapter extends BaseAdapter {
             public void onClick(View v) {
                 mContext.setTheme(R.style.AppTheme);
                 AlertDialog.Builder alert = new AlertDialog.Builder(mContext);
-                alert.setTitle("Suppression");
-                alert.setMessage("Etes vous sur de vouloir supprimer cette liste ?");
+                alert.setTitle("Deletion");
+                alert.setMessage("Are you sure you want to delete this list ?");
                 alert.setPositiveButton("OUI", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
