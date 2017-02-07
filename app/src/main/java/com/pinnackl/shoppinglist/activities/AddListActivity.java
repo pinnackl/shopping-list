@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,10 +13,14 @@ import android.widget.Toast;
 import com.pinnackl.shoppinglist.HttpRequest;
 import com.pinnackl.shoppinglist.IHttpRequestListener;
 import com.pinnackl.shoppinglist.R;
+import com.pinnackl.shoppinglist.list.List;
+import com.pinnackl.shoppinglist.list.ListFactory;
+import com.pinnackl.shoppinglist.list.ListUtil;
 import com.pinnackl.shoppinglist.request.Request;
 import com.pinnackl.shoppinglist.request.RequestFactory;
 import com.pinnackl.shoppinglist.user.UserUtil;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class AddListActivity extends AppCompatActivity {
@@ -65,9 +68,19 @@ public class AddListActivity extends AppCompatActivity {
 
                 @Override
                 public void onSuccess(JSONObject result) {
-                    Toast toast = Toast.makeText(AddListActivity.this, "List created", Toast.LENGTH_SHORT);
-                    toast.show();
-                    startActivity(new Intent(AddListActivity.this, ProductActivity.class));
+                    try {
+                        JSONObject oList = result.getJSONObject("result");
+                        ListFactory factory = new ListFactory();
+                        List list = factory.createList();
+                        ListUtil util = new ListUtil();
+                        util.save(oList, list);
+
+                        Toast toast = Toast.makeText(AddListActivity.this, "List created", Toast.LENGTH_SHORT);
+                        toast.show();
+                        startActivity(new Intent(AddListActivity.this, ProductActivity.class));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
             // get token in shared preferences

@@ -104,7 +104,7 @@ public class CustomAdapter extends BaseAdapter {
                 AlertDialog.Builder alert = new AlertDialog.Builder(mContext);
                 alert.setTitle("Deletion");
                 alert.setMessage("Are you sure you want to delete this list ?");
-                alert.setPositiveButton("OUI", new DialogInterface.OnClickListener() {
+                alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         HttpRequest request = new HttpRequest(mContext);
@@ -138,7 +138,7 @@ public class CustomAdapter extends BaseAdapter {
                         dialog.dismiss();
                     }
                 });
-                alert.setNegativeButton("NON", new DialogInterface.OnClickListener() {
+                alert.setNegativeButton("NO", new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
