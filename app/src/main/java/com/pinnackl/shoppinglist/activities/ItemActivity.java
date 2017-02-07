@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.pinnackl.shoppinglist.CustomAdapterItem;
 import com.pinnackl.shoppinglist.HttpRequest;
@@ -101,6 +102,10 @@ public class ItemActivity extends AppCompatActivity {
 
                         mAdapter = new CustomAdapterItem(ItemActivity.this, names, ids, nbProducts, id);
                         mListView.setAdapter(mAdapter);
+                    }
+                    if(items.length() == 0) {
+                        TextView textEmpty = (TextView)findViewById(R.id.empty);
+                        textEmpty.setVisibility(View.VISIBLE);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -28,12 +28,14 @@
     <string name="action_create_list">Create list</string>
     <string name="prompt_shopping_list_name">Shopping list name</string>
     <string name="action_edit_list">Edit list</string>
+    <string name="list_empty">There is no shopping list yet. You can create one by clicking on the bottom right button.</string>
 
     <!-- Strings related to shopping list items -->
     <string name="action_add_item">Add a product</string>
     <string name="prompt_no_items">There isn\'t any product yet.</string>
     <string name="action_create_item">Create product</string>
     <string name="prompt_item_name">Product name</string>
+    <string name="item_empty">There is no item yet. You can create one by clicking on the bottom right button.</string>
 
     <!-- Strings related to menu -->
     <string name="title_activity_menu">MenuActivity</string>

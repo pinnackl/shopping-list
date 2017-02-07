@@ -95,6 +95,10 @@ public class ProductActivity extends AppCompatActivity
                         mAdapter = new CustomAdapter(ProductActivity.this, names, ids, dates);
                         mListView.setAdapter(mAdapter);
                     }
+                    if(lists.length() == 0) {
+                        TextView textEmpty = (TextView)findViewById(R.id.empty);
+                        textEmpty.setVisibility(View.VISIBLE);
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
