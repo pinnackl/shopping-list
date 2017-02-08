@@ -90,7 +90,6 @@ public class ProductActivity extends AppCompatActivity
                         ids.add(listId);
                         String listDateCreation = object.getString("created_date");
                         dates.add(listDateCreation);
-                        String listCompleted = object.getString("completed");
 
                         mAdapter = new CustomAdapter(ProductActivity.this, names, ids, dates);
                         mListView.setAdapter(mAdapter);

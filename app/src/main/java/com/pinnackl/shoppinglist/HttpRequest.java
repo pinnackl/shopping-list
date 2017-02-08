@@ -2,8 +2,6 @@ package com.pinnackl.shoppinglist;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.pinnackl.shoppinglist.request.Request;
 
@@ -69,7 +67,6 @@ public class HttpRequest extends AsyncTask<Request, Void, String> {
     @Override
     protected void onPostExecute(String result) {
         //Do something with the JSON string
-        Log.d("Plop", "response: " + result);
         try {
             JSONObject jsonObj = new JSONObject(result.toString());
 
