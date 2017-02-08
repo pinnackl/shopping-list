@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">Shopping List</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+
+    <!-- Strings related to register -->
+    <string name="prompt_password_register">Password</string>
+    <string name="prompt_firstname">Firstname</string>
+    <string name="prompt_lastname">Lastname</string>
+    <string name="action_register">Register</string>
+    <string name="action_account">Already have an account ? Sign in</string>
+
+    <!-- Strings related to shopping list -->
+    <string name="title_activity_product">Shopping lists</string>
+    <string name="action_add_list">Add a shopping list</string>
+    <string name="prompt_no_lists">There isn\'t any shopping list yet.</string>
+    <string name="action_create_list">Create list</string>
+    <string name="prompt_shopping_list_name">Shopping list name</string>
+    <string name="action_edit_list">Edit list</string>
+    <string name="list_empty">There is no shopping list yet. You can create one by clicking on the bottom right button.</string>
+
+    <!-- Strings related to shopping list items -->
+    <string name="action_add_item">Add a product</string>
+    <string name="prompt_no_items">There isn\'t any product yet.</string>
+    <string name="action_create_item">Create product</string>
+    <string name="prompt_item_name">Product name</string>
+    <string name="item_empty">There is no item yet. You can create one by clicking on the bottom right button.</string>
+
+    <!-- Strings related to menu -->
+    <string name="title_activity_menu">MenuActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+</resources>
